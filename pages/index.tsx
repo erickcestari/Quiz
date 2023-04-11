@@ -12,13 +12,6 @@ import { useRouter } from 'next/router'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const questaoMock = new QuestaoModel(1, 'Melhor cor?', [
-  RespostaModel.errada('verde'),
-  RespostaModel.errada('vermelho'),
-  RespostaModel.errada('azul'),
-  RespostaModel.certa('Preta')
-])
-
 const BASE_URL = 'https://quiz-omega-three.vercel.app/api'
 
 
@@ -26,7 +19,7 @@ const BASE_URL = 'https://quiz-omega-three.vercel.app/api'
 export default function Home() {
   const router = useRouter()
   const [idsDasQuestoes, setIdsDasQuestoes] = useState<number[]>([])
-  const [questao, setQuestao] = useState<QuestaoModel>(questaoMock)
+  const [questao, setQuestao] = useState<QuestaoModel>()
   const [respostasCertas, setRespostasCertas] = useState(0)
 
   const carregarIdsDasQuestoes = async () =>{
@@ -57,8 +50,10 @@ export default function Home() {
   }
 
   const idProximaPergunta = () => {
-    const proximoIndice = idsDasQuestoes.indexOf(questao.id) + 1
-    return idsDasQuestoes[proximoIndice]
+    if(questao){
+      const proximoIndice = idsDasQuestoes.indexOf(questao.id) + 1
+      return idsDasQuestoes[proximoIndice]
+    }
   }
 
   const irPraProximoPasso = () => {
@@ -88,5 +83,5 @@ export default function Home() {
         questaoRespondida={questaoRespondida}
         irPraProximoPasso={irPraProximoPasso}
        />
-      : <><h1>Carregando</h1> <h1>✋</h1></>
+      : <div style={{display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', height:'100vh'}}><h1>Carregando</h1> <h1>✋</h1></div>
 }
