@@ -19,7 +19,7 @@ const questaoMock = new QuestaoModel(1, 'Melhor cor?', [
   RespostaModel.certa('Preta')
 ])
 
-const BASE_URL = 'http://localhost:3000/api'
+const BASE_URL = 'https://quiz-omega-three.vercel.app/api'
 
 
 
